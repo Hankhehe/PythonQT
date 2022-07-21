@@ -167,7 +167,10 @@ class Ui_MainWindow(object):
         
         self.pushButton_Query_DBConfig.clicked.connect(self.GetDBConfig)
         self.pushButton_Change_DBConfig.clicked.connect(self.WriteDBConfig)
+        self.pushButton_Query_ServerSSL.clicked.connect(self.GetSSLEnabled)
+        self.pushButton_Change_ServerSSL.clicked.connect(self.WriteSSLConfig)
         self.pushButton_RestartService_DBConfig.clicked.connect(self.RestartAtheNACService)
+        self.pushButton_RestartService_ServerSSL.clicked.connect(self.RestartAtheNACService)
     
     def GetDBConfig(self) -> None:
         result = {}
@@ -188,6 +191,19 @@ class Ui_MainWindow(object):
             resultstr = resultstr + f'{i} : \n {result[i]} \n\n'
         self.plainTextEdit_Value_DBConfig.setPlainText(resultstr)
     
+    def GetSSLEnabled(self) -> None:
+        result = {}
+        with codecs.open(filename=self.lineEdit_ConfigPath_ServerSSL_Web.text(),encoding='utf-8') as WebconfigFile:
+            configdata = json5.loads(WebconfigFile.read())
+            result['Web_SSL'] =  configdata['SecuritySetting']['EnableSSL']
+        with codecs.open(filename=self.lineEdit_ConfigPath_ServerSSL_CoreService.text(),encoding='utf-8') as CSconfigFile:
+            configdata = json5.loads(CSconfigFile.read())
+            result['CS_SSL'] =  configdata['SecuritySetting']['EnableSSL']
+        resultstr = ''
+        for i in result:
+            resultstr = resultstr + f'{i} : \n {result[i]} \n\n'
+        self.plainTextEdit_Value_ServerSSL.setPlainText(resultstr)
+
     def WriteDBConfig(self) -> None:
         filepaths = []
         filepaths.append(self.lineEdit_ConfigPath_DBConfig_Web.text())
@@ -205,13 +221,28 @@ class Ui_MainWindow(object):
                 configFile.write(json5.dumps(config,indent=4))
         self.GetDBConfig()
 
+    def WriteSSLConfig(self) -> None:
+        filepaths = []
+        filepaths.append(self.lineEdit_ConfigPath_ServerSSL_Web.text())
+        filepaths.append(self.lineEdit_ConfigPath_ServerSSL_CoreService.text())
+        for filepath in filepaths:
+            config = None
+            with codecs.open(filename=filepath,encoding='utf-8') as configfile:
+                config = json5.loads(configfile.read())
+            config['SecuritySetting']['EnableSSL'] = eval(self.lineEdit_Enable_ServerSSL.text())
+            with codecs.open(filename=filepath,mode='w',encoding='utf-8') as configFile:
+                configFile.write(json5.dumps(config,indent=4))
+        self.GetSSLEnabled()
+
+
     def RestartAtheNACService(self) -> None:
         self.process = pxpowershell()
         self.process.start_process()
         resultPIXISUI = self.process.run('Restart-Service -Name PIXISWebUI')
         resultPIXISRadius = self.process.run('Restart-Service -Name PIXISRadiusService')
         resultPIXISCS = self.process.run('Restart-Service -Name PIXISCoreService')
-        self.plainTextEdit_Value_DBConfig.setPlainText(str(resultPIXISUI))
+        resultstr = f'PIXIS_UI : {str(resultPIXISUI)} \n PIXIS_CS : {str(resultPIXISCS)} \n PIXIS_Radius : {str(resultPIXISRadius)}'
+        self.plainTextEdit_Value_DBConfig.setPlainText(resultstr)
 
 
 if __name__ == "__main__":
