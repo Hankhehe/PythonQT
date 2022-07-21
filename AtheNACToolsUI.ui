@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1079</width>
+    <height>828</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>1051</width>
+      <height>781</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="tab_DBConfig">
+     <attribute name="title">
+      <string>DBConfig</string>
+     </attribute>
+     <widget class="QPushButton" name="pushButton_Change_DBConfig">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>490</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Change</string>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_ConfigPath_DBConfig">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>30</y>
+        <width>61</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>ConfigPath</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_Value_DBConfig">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>30</y>
+        <width>81</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Value</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_ConfigPath_DBConfig_Web">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>70</y>
+        <width>281</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>C:/PIXIS/Web/Config/PixisWebSetting.cfg</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_Web_DBConfig">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>70</y>
+        <width>47</width>
+        <height>12</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Web</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_CoreService_DBConfig">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>170</y>
+        <width>81</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>CoreService</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_Radius_DBConfig">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>280</y>
+        <width>47</width>
+        <height>12</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Radius</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_ConfigPath_DBConfig_CoreService">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>170</y>
+        <width>281</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>C:/PIXIS/CoreService/Config/CoreServiceSetting.cfg</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_ConfigPath_DBConfig_Radius">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>270</y>
+        <width>281</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>C:/PIXIS/RadiusService/Config/RadiusServiceSetting.cfg</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_Query_DBConfig">
+      <property name="geometry">
+       <rect>
+        <x>940</x>
+        <y>340</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Query SQL Value</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_SQLIP_DBConfig">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>490</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_SQLIP_DBConfig">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>470</y>
+        <width>47</width>
+        <height>12</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>SQL IP</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_SQLAccount_DBConfig">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>470</y>
+        <width>81</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>SQL Account</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_SQLAccount_DBConfig">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>490</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_RestartService_DBConfig">
+      <property name="geometry">
+       <rect>
+        <x>430</x>
+        <y>490</y>
+        <width>91</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Restart Service</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_SQLPWD_DBConfig">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>490</y>
+        <width>113</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_SQLPWD_DBConfig">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>470</y>
+        <width>71</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>SQL Password</string>
+      </property>
+     </widget>
+     <widget class="QPlainTextEdit" name="plainTextEdit_Value_DBConfig">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>70</y>
+        <width>621</width>
+        <height>261</height>
+       </rect>
+      </property>
+      <property name="lineWrapMode">
+       <enum>QPlainTextEdit::NoWrap</enum>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+      <property name="plainText">
+       <string/>
+      </property>
+      <property name="centerOnScroll">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_Server_SSL">
+     <attribute name="title">
+      <string>En/Disable Server SSL</string>
+     </attribute>
+     <widget class="QLabel" name="label_Value_ServerSSL">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>30</y>
+        <width>81</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Value</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_ConfigPath_ServerSSL">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>30</y>
+        <width>61</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>ConfigPath</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_ConfigPath_ServerSSL_Web">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>70</y>
+        <width>281</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>C:/PIXIS/Web/Config/PixisWebSetting.cfg</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_Web_ServerSSL">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>70</y>
+        <width>47</width>
+        <height>12</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Web</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_CoreService_ServerSSL">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>170</y>
+        <width>81</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>CoreService</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_ConfigPath_ServerSSL_CoreService">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>170</y>
+        <width>281</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>C:/PIXIS/CoreService/Config/CoreServiceSetting.cfg</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_Enable_ServerSSL">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>270</y>
+        <width>47</width>
+        <height>12</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Enable</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_RestartService_ServerSSL">
+      <property name="geometry">
+       <rect>
+        <x>190</x>
+        <y>290</y>
+        <width>91</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Restart Service</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_Change_ServerSSL">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>290</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Change</string>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_Enable_ServerSSL">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>290</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_Query_ServerSSL">
+      <property name="geometry">
+       <rect>
+        <x>670</x>
+        <y>260</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Query Value</string>
+      </property>
+     </widget>
+     <widget class="QPlainTextEdit" name="plainTextEdit_Value_ServerSSL">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>50</y>
+        <width>321</width>
+        <height>201</height>
+       </rect>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+      <property name="plainText">
+       <string/>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_Probe_SSL">
+     <attribute name="title">
+      <string>En/Disable Probe SSL</string>
+     </attribute>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1079</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
