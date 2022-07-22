@@ -1,9 +1,8 @@
-import json5,codecs
+import json5,codecs,json,subprocess
 from PyQt5 import QtCore, QtGui, QtWidgets
-from pxpowershell_engine import pxpowershell
 
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
+    def setupUi(self, MainWindow): 
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1079, 828)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -185,76 +184,93 @@ class Ui_MainWindow(object):
         self.pushButton_RestartService_ServerSSL.clicked.connect(self.RestartAtheNACService)
     
     def GetDBConfig(self) -> None:
-        result = {}
-        with codecs.open(filename=self.lineEdit_ConfigPath_DBConfig_Web.text(),encoding='utf-8') as WebconfigFile:
-            configdata = json5.loads(WebconfigFile.read())
-            result['Web_PIXIS'] =  configdata['ConnectionStrings']['PIXIS']
-            result['Web_PIXISEventLog'] =  configdata['ConnectionStrings']['PIXIS_EventLog']
-        with codecs.open(filename=self.lineEdit_ConfigPath_DBConfig_CoreService.text(),encoding='utf-8') as CSconfigFile:
-            configdata = json5.loads(CSconfigFile.read())
-            result['CS_PIXIS'] =  configdata['ConnectionStrings']['PIXIS']
-            result['CS_PIXISEventLog'] =  configdata['ConnectionStrings']['PIXIS_EventLog']
-        with codecs.open(filename=self.lineEdit_ConfigPath_DBConfig_Radius.text(),encoding='utf-8') as RadiusconfigFile:
-            configdata = json5.loads(RadiusconfigFile.read())
-            result['Radius_PIXIS'] =  configdata['ConnectionStrings']['PIXIS']
-            result['Radius_PIXISEventLog'] =  configdata['ConnectionStrings']['PIXIS_EventLog']
-        resultstr = ''
-        for i in result:
-            resultstr = resultstr + f'{i} : \n {result[i]} \n\n'
-        self.plainTextEdit_Result_Display.setPlainText(resultstr)
+        try:
+            result = {}
+            with codecs.open(filename=self.lineEdit_ConfigPath_DBConfig_Web.text(),encoding='utf-8') as WebconfigFile:
+                configdata = json5.loads(WebconfigFile.read())
+                result['Web_PIXIS'] =  configdata['ConnectionStrings']['PIXIS']
+                result['Web_PIXISEventLog'] =  configdata['ConnectionStrings']['PIXIS_EventLog']
+            with codecs.open(filename=self.lineEdit_ConfigPath_DBConfig_CoreService.text(),encoding='utf-8') as CSconfigFile:
+                configdata = json5.loads(CSconfigFile.read())
+                result['CS_PIXIS'] =  configdata['ConnectionStrings']['PIXIS']
+                result['CS_PIXISEventLog'] =  configdata['ConnectionStrings']['PIXIS_EventLog']
+            with codecs.open(filename=self.lineEdit_ConfigPath_DBConfig_Radius.text(),encoding='utf-8') as RadiusconfigFile:
+                configdata = json5.loads(RadiusconfigFile.read())
+                result['Radius_PIXIS'] =  configdata['ConnectionStrings']['PIXIS']
+                result['Radius_PIXISEventLog'] =  configdata['ConnectionStrings']['PIXIS_EventLog']
+            resultstr = ''
+            for i in result:
+                resultstr = resultstr + f'{i} : \n {result[i]} \n\n'
+            self.plainTextEdit_Result_Display.setPlainText(resultstr)
+        except Exception as e:
+            self.plainTextEdit_Result_Display.setPlainText(str(e))
     
     def GetSSLEnabled(self) -> None:
-        result = {}
-        with codecs.open(filename=self.lineEdit_ConfigPath_ServerSSL_Web.text(),encoding='utf-8') as WebconfigFile:
-            configdata = json5.loads(WebconfigFile.read())
-            result['Web_SSL'] =  configdata['SecuritySetting']['EnableSSL']
-        with codecs.open(filename=self.lineEdit_ConfigPath_ServerSSL_CoreService.text(),encoding='utf-8') as CSconfigFile:
-            configdata = json5.loads(CSconfigFile.read())
-            result['CS_SSL'] =  configdata['SecuritySetting']['EnableSSL']
-        resultstr = ''
-        for i in result:
-            resultstr = resultstr + f'{i} : \n {result[i]} \n\n'
-        self.plainTextEdit_Result_Display.setPlainText(resultstr)
+        try:
+            result = {}
+            with codecs.open(filename=self.lineEdit_ConfigPath_ServerSSL_Web.text(),encoding='utf-8') as WebconfigFile:
+                configdata = json5.loads(WebconfigFile.read())
+                result['Web_SSL'] =  configdata['SecuritySetting']['EnableSSL']
+            with codecs.open(filename=self.lineEdit_ConfigPath_ServerSSL_CoreService.text(),encoding='utf-8') as CSconfigFile:
+                configdata = json5.loads(CSconfigFile.read())
+                result['CS_SSL'] =  configdata['SecuritySetting']['EnableSSL']
+            resultstr = ''
+            for i in result:
+                resultstr = resultstr + f'{i} : \n {result[i]} \n\n'
+            self.plainTextEdit_Result_Display.setPlainText(resultstr)
+        except Exception as e:
+            self.plainTextEdit_Result_Display.setPlainText(str(e))
 
     def WriteDBConfig(self) -> None:
-        filepaths = []
-        filepaths.append(self.lineEdit_ConfigPath_DBConfig_Web.text())
-        filepaths.append(self.lineEdit_ConfigPath_DBConfig_CoreService.text())
-        filepaths.append(self.lineEdit_ConfigPath_DBConfig_Radius.text())
-        for filepath in filepaths:
-            config = None
-            with codecs.open(filename=filepath,encoding='utf-8') as configfile:
-                config = json5.loads(configfile.read())
-            SetPIXISConnectStr = f'Data Source={self.lineEdit_SQLIP_DBConfig.text()};Initial Catalog=PIXIS;User ID={self.lineEdit_SQLAccount_DBConfig.text()};Password={self.lineEdit_SQLPWD_DBConfig.text()};MultipleActiveResultSets=True'
-            SetPIXISEventConnectStr = f'Data Source={self.lineEdit_SQLIP_DBConfig.text()};Initial Catalog=PixisEventLog;User ID={self.lineEdit_SQLAccount_DBConfig.text()};Password={self.lineEdit_SQLPWD_DBConfig.text()};MultipleActiveResultSets=True'
-            config['ConnectionStrings']['PIXIS'] = SetPIXISConnectStr
-            config['ConnectionStrings']['PIXIS_EventLog'] = SetPIXISEventConnectStr
-            with codecs.open(filename=filepath,mode='w',encoding='utf-8') as configFile:
-                configFile.write(json5.dumps(config,indent=4))
-        self.GetDBConfig()
+        try:
+            filepaths = []
+            filepaths.append(self.lineEdit_ConfigPath_DBConfig_Web.text())
+            filepaths.append(self.lineEdit_ConfigPath_DBConfig_CoreService.text())
+            filepaths.append(self.lineEdit_ConfigPath_DBConfig_Radius.text())
+            for filepath in filepaths:
+                config = None
+                with codecs.open(filename=filepath,encoding='utf-8') as configfile:
+                    config = json5.loads(configfile.read())
+                SetPIXISConnectStr = f'Data Source={self.lineEdit_SQLIP_DBConfig.text()};Initial Catalog=PIXIS;User ID={self.lineEdit_SQLAccount_DBConfig.text()};Password={self.lineEdit_SQLPWD_DBConfig.text()};MultipleActiveResultSets=True'
+                SetPIXISEventConnectStr = f'Data Source={self.lineEdit_SQLIP_DBConfig.text()};Initial Catalog=PixisEventLog;User ID={self.lineEdit_SQLAccount_DBConfig.text()};Password={self.lineEdit_SQLPWD_DBConfig.text()};MultipleActiveResultSets=True'
+                config['ConnectionStrings']['PIXIS'] = SetPIXISConnectStr
+                config['ConnectionStrings']['PIXIS_EventLog'] = SetPIXISEventConnectStr
+                with codecs.open(filename=filepath,mode='w',encoding='utf-8') as configFile:
+                    configFile.write(json.dumps(config,indent=4))
+            self.GetDBConfig()
+        except Exception as e:
+            self.plainTextEdit_Result_Display.setPlainText(str(e))
 
     def WriteSSLConfig(self) -> None:
-        filepaths = []
-        filepaths.append(self.lineEdit_ConfigPath_ServerSSL_Web.text())
-        filepaths.append(self.lineEdit_ConfigPath_ServerSSL_CoreService.text())
-        for filepath in filepaths:
-            config = None
-            with codecs.open(filename=filepath,encoding='utf-8') as configfile:
-                config = json5.loads(configfile.read())
-            config['SecuritySetting']['EnableSSL'] = bool(self.checkBox_Enabled_ServerSSL.checkState())
-            with codecs.open(filename=filepath,mode='w',encoding='utf-8') as configFile:
-                configFile.write(json5.dumps(config,indent=4))
-        self.GetSSLEnabled()
-
+        try:
+            filepaths = []
+            filepaths.append(self.lineEdit_ConfigPath_ServerSSL_Web.text())
+            filepaths.append(self.lineEdit_ConfigPath_ServerSSL_CoreService.text())
+            for filepath in filepaths:
+                config = None
+                with codecs.open(filename=filepath,encoding='utf-8') as configfile:
+                    config = json5.loads(configfile.read())
+                config['SecuritySetting']['EnableSSL'] = bool(self.checkBox_Enabled_ServerSSL.checkState())
+                with codecs.open(filename=filepath,mode='w',encoding='utf-8') as configFile:
+                    configFile.write(json.dumps(config,indent=4))
+            self.GetSSLEnabled()
+        except Exception as e:
+            self.plainTextEdit_Result_Display.setPlainText(str(e))
 
     def RestartAtheNACService(self) -> None:
-        self.process = pxpowershell()
-        self.process.start_process()
-        resultPIXISUI = self.process.run('Restart-Service -Name PIXISWebUI')
-        resultPIXISRadius = self.process.run('Restart-Service -Name PIXISRadiusService')
-        resultPIXISCS = self.process.run('Restart-Service -Name PIXISCoreService')
-        resultstr = f'PIXIS_UI : {str(resultPIXISUI)} \n PIXIS_CS : {str(resultPIXISCS)} \n PIXIS_Radius : {str(resultPIXISRadius)}'
-        self.plainTextEdit_Result_Display.setPlainText(resultstr)
+        try :
+            resultstr = ''
+            servicelist = ['PIXISWebUI','PIXISCoreService','PIXISRadiusService']
+            for service in  servicelist :
+                if subprocess.run(['sc', 'query', service]).returncode ==1060 : 
+                    resultstr = resultstr + f'{service} : Service Not Found \n'
+                    continue
+                subprocess.run(['sc', 'stop', service])
+                result = subprocess.run(['sc', 'start', service]).returncode
+                resultstr = resultstr + f'{service} : {result} \n'
+            self.plainTextEdit_Result_Display.setPlainText(resultstr)
+        except Exception as e:
+            self.plainTextEdit_Result_Display.setPlainText(str(e))
 
 
 if __name__ == "__main__":
