@@ -276,6 +276,7 @@ class Ui_MainWindow(object):
         self.pushButton_RestartService_DBConfig.clicked.connect(self.RestartAtheNACService)
         self.pushButton_RestartService_ServerSSL.clicked.connect(self.RestartAtheNACService)
         self.pushButton_Change_ProbeSSL.clicked.connect(self.WriteProbeSSLConfig)
+        self.pushButton_Query_ProbeSSL.clicked.connect(self.GetProbeSSLConfig)
     
     def GetDBConfig(self) -> None:
         try:
@@ -314,6 +315,30 @@ class Ui_MainWindow(object):
             self.plainTextEdit_Result_Display.setPlainText(resultstr)
         except Exception as e:
             self.plainTextEdit_Result_Display.setPlainText(str(e))
+            
+    def GetProbeSSLConfig(self) -> None:
+        def GetData(remotepath,localpath) -> str:
+            sftp.get(remotepath,localpath)
+            with codecs.open(filename='temp',encoding='big5') as f :
+                data = json5.loads(f.read())
+                return data['SecuritySetting']['EnableSSL']
+        try:
+            ssh = paramiko.SSHClient()
+            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            ssh.connect(self.lineEdit_ProbeIP_ProbeSSL.text(), username=self.lineEdit_SSHAccount_ProbeSSL.text()
+            , password=self.lineEdit_SSHPassword_ProbeSSL.text())
+            sftp = ssh.open_sftp()
+            result = f'Daemon : {GetData(remotepath="/PIXIS/Probe_Daemon/Config/ProbeDaemonSetting.cfg",localpath="temp")} \n'
+
+            ports = self.lineEdit_Port_ProbeSSL.text().split(',')
+            for port in ports:
+                result = result + f'Port {port} : {GetData(remotepath=f"/PIXIS/Probe_eth{port}/Config/PortWorkerSetting.cfg",localpath="temp")} \n'
+            sftp.close()
+            ssh.close()
+            os.remove('temp')
+            self.plainTextEdit_Result_Display.setPlainText(result)
+        except Exception as e:
+            self.plainTextEdit_Result_Display.setPlainText(str(e))
 
     def WriteDBConfig(self) -> None:
         try:
@@ -350,9 +375,6 @@ class Ui_MainWindow(object):
             self.GetServerSSLConfig()
         except Exception as e:
             self.plainTextEdit_Result_Display.setPlainText(str(e))
-    
-    def GetProbeSSLConfig(self) -> None:
-        pass
 
     def WriteProbeSSLConfig(self) -> None:
         def WriteData(remotepath,localpath) -> None:
