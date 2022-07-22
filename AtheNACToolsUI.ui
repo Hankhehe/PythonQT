@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab_DBConfig">
      <attribute name="title">
@@ -262,6 +262,58 @@
        <string>SQL Password</string>
       </property>
      </widget>
+     <widget class="QLabel" name="label_Radis_DBConfig">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>150</y>
+        <width>71</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Radis Config</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_Radis_DBConfig">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>170</y>
+        <width>221</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>192.168.10.20:6379,password=111aaaBBB</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_ChangeRadis_DBConfig">
+      <property name="geometry">
+       <rect>
+        <x>740</x>
+        <y>170</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Change Radis IP</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_GetRadis_DBConfig">
+      <property name="geometry">
+       <rect>
+        <x>660</x>
+        <y>170</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Get Radis IP</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_Server_SSL">
      <attribute name="title">
@@ -411,7 +463,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>CheckBox</string>
+       <string>Enable</string>
       </property>
      </widget>
     </widget>
@@ -598,7 +650,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>CheckBox</string>
+       <string>Enable</string>
       </property>
      </widget>
      <widget class="QPushButton" name="pushButton_Change_ProbeSSL">
