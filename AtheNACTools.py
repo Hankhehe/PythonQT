@@ -456,9 +456,9 @@ class Ui_MainWindow(object):
             ssh.connect(self.lineEdit_ProbeIP_ProbeSSL.text(), username=self.lineEdit_SSHAccount_ProbeSSL.text()
             , password=self.lineEdit_SSHPassword_ProbeSSL.text())
             ssh.exec_command('reboot')
-            self.plainTextEdit_Result_Display.setPlaceholderText('Finished reboot')
+            self.plainTextEdit_Result_Display.setPlainText('Finished reboot')
         except Exception as e :
-            self.plainTextEdit_Result_Display.setPlaceholderText(str(e))
+            self.plainTextEdit_Result_Display.setPlainText(str(e))
 
 
 if __name__ == "__main__":
