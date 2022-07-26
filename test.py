@@ -214,6 +214,9 @@ class Ui_MainWindow(object):
         self.pushButton_Query_ProbeSSL = QtWidgets.QPushButton(self.tab_Probe_SSL)
         self.pushButton_Query_ProbeSSL.setGeometry(QtCore.QRect(430, 80, 101, 21))
         self.pushButton_Query_ProbeSSL.setObjectName("pushButton_Query_ProbeSSL")
+        self.pushButton_Reboot_ProbeSSL = QtWidgets.QPushButton(self.tab_Probe_SSL)
+        self.pushButton_Reboot_ProbeSSL.setGeometry(QtCore.QRect(620, 80, 75, 23))
+        self.pushButton_Reboot_ProbeSSL.setObjectName("pushButton_Reboot_ProbeSSL")
         self.tabWidget.addTab(self.tab_Probe_SSL, "")
         self.plainTextEdit_Result_Display = QtWidgets.QPlainTextEdit(self.centralwidget)
         self.plainTextEdit_Result_Display.setGeometry(QtCore.QRect(20, 470, 1021, 311))
@@ -232,7 +235,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(2)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -280,4 +283,5 @@ class Ui_MainWindow(object):
         self.checkBox_Enabled_ProbeSSL.setText(_translate("MainWindow", "Enable"))
         self.pushButton_Change_ProbeSSL.setText(_translate("MainWindow", "Change"))
         self.pushButton_Query_ProbeSSL.setText(_translate("MainWindow", "Query Value"))
+        self.pushButton_Reboot_ProbeSSL.setText(_translate("MainWindow", "Reboot"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_Probe_SSL), _translate("MainWindow", "En/Disable Probe SSL"))
