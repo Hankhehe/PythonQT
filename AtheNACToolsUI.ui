@@ -226,7 +226,7 @@
        </rect>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_RestartService_DBConfig">
+     <widget class="QPushButton" name="pushButton_StartService_DBConfig">
       <property name="geometry">
        <rect>
         <x>610</x>
@@ -236,7 +236,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Restart Service</string>
+       <string>Start Service</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="lineEdit_SQLPWD_DBConfig">
@@ -312,6 +312,19 @@
       </property>
       <property name="text">
        <string>Get Radis IP</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_StopService_DBConfig">
+      <property name="geometry">
+       <rect>
+        <x>710</x>
+        <y>110</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>StopService</string>
       </property>
      </widget>
     </widget>
@@ -391,7 +404,7 @@
        <string>C:/PIXIS/CoreService/Config/CoreServiceSetting.cfg</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_RestartService_ServerSSL">
+     <widget class="QPushButton" name="pushButton_StartService_ServerSSL">
       <property name="geometry">
        <rect>
         <x>630</x>
@@ -401,7 +414,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Restart Service</string>
+       <string>Start Service</string>
       </property>
      </widget>
      <widget class="QPushButton" name="pushButton_Change_ServerSSL">
@@ -464,6 +477,19 @@
       </property>
       <property name="text">
        <string>Enable</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_StopService_ServerSSL">
+      <property name="geometry">
+       <rect>
+        <x>730</x>
+        <y>100</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>StopService</string>
       </property>
      </widget>
     </widget>

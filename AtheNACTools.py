@@ -66,9 +66,9 @@ class Ui_MainWindow(object):
         self.lineEdit_SQLAccount_DBConfig = QtWidgets.QLineEdit(self.tab_DBConfig)
         self.lineEdit_SQLAccount_DBConfig.setGeometry(QtCore.QRect(520, 80, 91, 21))
         self.lineEdit_SQLAccount_DBConfig.setObjectName("lineEdit_SQLAccount_DBConfig")
-        self.pushButton_RestartService_DBConfig = QtWidgets.QPushButton(self.tab_DBConfig)
-        self.pushButton_RestartService_DBConfig.setGeometry(QtCore.QRect(610, 110, 91, 23))
-        self.pushButton_RestartService_DBConfig.setObjectName("pushButton_RestartService_DBConfig")
+        self.pushButton_StartService_DBConfig = QtWidgets.QPushButton(self.tab_DBConfig)
+        self.pushButton_StartService_DBConfig.setGeometry(QtCore.QRect(610, 110, 91, 23))
+        self.pushButton_StartService_DBConfig.setObjectName("pushButton_StartService_DBConfig")
         self.lineEdit_SQLPWD_DBConfig = QtWidgets.QLineEdit(self.tab_DBConfig)
         self.lineEdit_SQLPWD_DBConfig.setGeometry(QtCore.QRect(630, 80, 113, 20))
         self.lineEdit_SQLPWD_DBConfig.setObjectName("lineEdit_SQLPWD_DBConfig")
@@ -87,6 +87,9 @@ class Ui_MainWindow(object):
         self.pushButton_GetRadis_DBConfig = QtWidgets.QPushButton(self.tab_DBConfig)
         self.pushButton_GetRadis_DBConfig.setGeometry(QtCore.QRect(420, 200, 75, 23))
         self.pushButton_GetRadis_DBConfig.setObjectName("pushButton_GetRadis_DBConfig")
+        self.pushButton_StopService_DBConfig = QtWidgets.QPushButton(self.tab_DBConfig)
+        self.pushButton_StopService_DBConfig.setGeometry(QtCore.QRect(710, 110, 75, 23))
+        self.pushButton_StopService_DBConfig.setObjectName("pushButton_StopService_DBConfig")
         self.tabWidget.addTab(self.tab_DBConfig, "")
         self.tab_Server_SSL = QtWidgets.QWidget()
         self.tab_Server_SSL.setObjectName("tab_Server_SSL")
@@ -110,9 +113,9 @@ class Ui_MainWindow(object):
         self.lineEdit_ConfigPath_ServerSSL_CoreService = QtWidgets.QLineEdit(self.tab_Server_SSL)
         self.lineEdit_ConfigPath_ServerSSL_CoreService.setGeometry(QtCore.QRect(120, 110, 281, 31))
         self.lineEdit_ConfigPath_ServerSSL_CoreService.setObjectName("lineEdit_ConfigPath_ServerSSL_CoreService")
-        self.pushButton_RestartService_ServerSSL = QtWidgets.QPushButton(self.tab_Server_SSL)
-        self.pushButton_RestartService_ServerSSL.setGeometry(QtCore.QRect(630, 100, 91, 23))
-        self.pushButton_RestartService_ServerSSL.setObjectName("pushButton_RestartService_ServerSSL")
+        self.pushButton_StartService_ServerSSL = QtWidgets.QPushButton(self.tab_Server_SSL)
+        self.pushButton_StartService_ServerSSL.setGeometry(QtCore.QRect(630, 100, 91, 23))
+        self.pushButton_StartService_ServerSSL.setObjectName("pushButton_StartService_ServerSSL")
         self.pushButton_Change_ServerSSL = QtWidgets.QPushButton(self.tab_Server_SSL)
         self.pushButton_Change_ServerSSL.setGeometry(QtCore.QRect(540, 100, 75, 23))
         self.pushButton_Change_ServerSSL.setCheckable(False)
@@ -131,6 +134,9 @@ class Ui_MainWindow(object):
         self.checkBox_Enabled_ServerSSL = QtWidgets.QCheckBox(self.tab_Server_SSL)
         self.checkBox_Enabled_ServerSSL.setGeometry(QtCore.QRect(430, 70, 73, 21))
         self.checkBox_Enabled_ServerSSL.setObjectName("checkBox_Enabled_ServerSSL")
+        self.pushButton_StopService_ServerSSL = QtWidgets.QPushButton(self.tab_Server_SSL)
+        self.pushButton_StopService_ServerSSL.setGeometry(QtCore.QRect(730, 100, 75, 23))
+        self.pushButton_StopService_ServerSSL.setObjectName("pushButton_StopService_ServerSSL")
         self.tabWidget.addTab(self.tab_Server_SSL, "")
         self.tab_Probe_SSL = QtWidgets.QWidget()
         self.tab_Probe_SSL.setObjectName("tab_Probe_SSL")
@@ -243,23 +249,25 @@ class Ui_MainWindow(object):
         self.pushButton_Query_DBConfig.setText(_translate("MainWindow", "Query SQL Value"))
         self.label_SQLIP_DBConfig.setText(_translate("MainWindow", "SQL IP"))
         self.label_SQLAccount_DBConfig.setText(_translate("MainWindow", "SQL Account"))
-        self.pushButton_RestartService_DBConfig.setText(_translate("MainWindow", "Restart Service"))
+        self.pushButton_StartService_DBConfig.setText(_translate("MainWindow", "Start Service"))
         self.label_SQLPWD_DBConfig.setText(_translate("MainWindow", "SQL Password"))
         self.label_Radis_DBConfig.setText(_translate("MainWindow", "Radis Config"))
         self.lineEdit_Radis_DBConfig.setText(_translate("MainWindow", "192.168.10.20:6379,password=111aaaBBB"))
         self.pushButton_ChangeRadis_DBConfig.setText(_translate("MainWindow", "Change Radis IP"))
         self.pushButton_GetRadis_DBConfig.setText(_translate("MainWindow", "Get Radis IP"))
+        self.pushButton_StopService_DBConfig.setText(_translate("MainWindow", "StopService"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_DBConfig), _translate("MainWindow", "DBConfig"))
         self.label_ConfigPath_ServerSSL.setText(_translate("MainWindow", "ConfigPath"))
         self.lineEdit_ConfigPath_ServerSSL_Web.setText(_translate("MainWindow", "C:/PIXIS/Web/Config/PixisWebSetting.cfg"))
         self.label_Web_ServerSSL.setText(_translate("MainWindow", "Web"))
         self.label_CoreService_ServerSSL.setText(_translate("MainWindow", "CoreService"))
         self.lineEdit_ConfigPath_ServerSSL_CoreService.setText(_translate("MainWindow", "C:/PIXIS/CoreService/Config/CoreServiceSetting.cfg"))
-        self.pushButton_RestartService_ServerSSL.setText(_translate("MainWindow", "Restart Service"))
+        self.pushButton_StartService_ServerSSL.setText(_translate("MainWindow", "Start Service"))
         self.pushButton_Change_ServerSSL.setText(_translate("MainWindow", "Change"))
         self.pushButton_Query_ServerSSL.setText(_translate("MainWindow", "Query Value"))
         self.label_Oprator_ServerSSL.setText(_translate("MainWindow", "Oprator"))
         self.checkBox_Enabled_ServerSSL.setText(_translate("MainWindow", "Enable"))
+        self.pushButton_StopService_ServerSSL.setText(_translate("MainWindow", "StopService"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_Server_SSL), _translate("MainWindow", "En/Disable Server SSL"))
         self.label_ProbeIP_ProbeSSl.setText(_translate("MainWindow", "Probe IP"))
         self.label_SSHAccount_ProbeSSl.setText(_translate("MainWindow", "SSH Account"))
@@ -283,50 +291,61 @@ class Ui_MainWindow(object):
         self.pushButton_ChangeRadis_DBConfig.clicked.connect(self.WriteRadisIP)
         self.pushButton_Query_ServerSSL.clicked.connect(self.GetServerSSLConfig)
         self.pushButton_Change_ServerSSL.clicked.connect(self.WriteServerSSLConfig)
-        self.pushButton_RestartService_DBConfig.clicked.connect(self.RestartAtheNACService)
-        self.pushButton_RestartService_ServerSSL.clicked.connect(self.RestartAtheNACService)
+        self.pushButton_StartService_DBConfig.clicked.connect(self.StartAtheNACService)
+        self.pushButton_StartService_ServerSSL.clicked.connect(self.StartAtheNACService)
+        self.pushButton_StopService_DBConfig.clicked.connect(self.StopAtheNACService)
+        self.pushButton_StopService_ServerSSL.clicked.connect(self.StopAtheNACService)
         self.pushButton_Change_ProbeSSL.clicked.connect(self.WriteProbeSSLConfig)
         self.pushButton_Query_ProbeSSL.clicked.connect(self.GetProbeSSLConfig)
         self.pushButton_Reboot_ProbeSSL.clicked.connect(self.RestartProbe)
         
     
     def GetDBConfig(self) -> None:
-        try:
-            result = {}
+        result = {}
+        try :
             with codecs.open(filename=self.lineEdit_ConfigPath_DBConfig_Web.text(),encoding='utf-8') as WebconfigFile:
                 configdata = json5.loads(WebconfigFile.read())
                 result['Web_PIXIS'] =  configdata['ConnectionStrings']['PIXIS']
                 result['Web_PIXISEventLog'] =  configdata['ConnectionStrings']['PIXIS_EventLog']
+        except Exception as e :
+            result['Web'] = str(e)
+        try :
             with codecs.open(filename=self.lineEdit_ConfigPath_DBConfig_CoreService.text(),encoding='utf-8') as CSconfigFile:
                 configdata = json5.loads(CSconfigFile.read())
                 result['CS_PIXIS'] =  configdata['ConnectionStrings']['PIXIS']
                 result['CS_PIXISEventLog'] =  configdata['ConnectionStrings']['PIXIS_EventLog']
+        except Exception as e :
+            result['CS'] = str(e)
+        try :
             with codecs.open(filename=self.lineEdit_ConfigPath_DBConfig_Radius.text(),encoding='utf-8') as RadiusconfigFile:
                 configdata = json5.loads(RadiusconfigFile.read())
                 result['Radius_PIXIS'] =  configdata['ConnectionStrings']['PIXIS']
                 result['Radius_PIXISEventLog'] =  configdata['ConnectionStrings']['PIXIS_EventLog']
-            resultstr = ''
-            for i in result:
-                resultstr = resultstr + f'{i} : \n {result[i]} \n\n'
-            self.plainTextEdit_Result_Display.setPlainText(resultstr)
-        except Exception as e:
-            self.plainTextEdit_Result_Display.setPlainText(str(e))
+        except Exception as e :
+            result['Radius'] = str(e)
+        resultstr = ''
+        for i in result:
+            resultstr = resultstr + f'{i} : \n {result[i]} \n\n'
+        self.plainTextEdit_Result_Display.setPlainText(resultstr)
     
     def GetServerSSLConfig(self) -> None:
-        try:
-            result = {}
+        result = {}
+        try :
             with codecs.open(filename=self.lineEdit_ConfigPath_ServerSSL_Web.text(),encoding='utf-8') as WebconfigFile:
                 configdata = json5.loads(WebconfigFile.read())
                 result['Web_SSL'] =  configdata['SecuritySetting']['EnableSSL']
+        except Exception as e :
+            result['Web_SSL'] = str(e)
+        try :
             with codecs.open(filename=self.lineEdit_ConfigPath_ServerSSL_CoreService.text(),encoding='utf-8') as CSconfigFile:
                 configdata = json5.loads(CSconfigFile.read())
                 result['CS_SSL'] =  configdata['SecuritySetting']['EnableSSL']
-            resultstr = ''
-            for i in result:
-                resultstr = resultstr + f'{i} : \n {result[i]} \n\n'
-            self.plainTextEdit_Result_Display.setPlainText(resultstr)
-        except Exception as e:
-            self.plainTextEdit_Result_Display.setPlainText(str(e))
+        except Exception as e :
+            result['CS_SSL'] = str(e)
+        resultstr = ''
+        for i in result:
+            resultstr = resultstr + f'{i} : \n {result[i]} \n\n'
+        self.plainTextEdit_Result_Display.setPlainText(resultstr)
 
     def GetProbeSSLConfig(self) -> None:
         def GetData(remotepath,localpath) -> str:
@@ -372,12 +391,12 @@ class Ui_MainWindow(object):
         self.GetRadisIP()
 
     def WriteDBConfig(self) -> None:
-        try:
-            filepaths = []
-            filepaths.append(self.lineEdit_ConfigPath_DBConfig_Web.text())
-            filepaths.append(self.lineEdit_ConfigPath_DBConfig_CoreService.text())
-            filepaths.append(self.lineEdit_ConfigPath_DBConfig_Radius.text())
-            for filepath in filepaths:
+        filepaths = []
+        filepaths.append(self.lineEdit_ConfigPath_DBConfig_Web.text())
+        filepaths.append(self.lineEdit_ConfigPath_DBConfig_CoreService.text())
+        filepaths.append(self.lineEdit_ConfigPath_DBConfig_Radius.text())
+        for filepath in filepaths:
+            try :
                 config = None
                 with codecs.open(filename=filepath,encoding='utf-8') as configfile:
                     config = json5.loads(configfile.read())
@@ -387,25 +406,25 @@ class Ui_MainWindow(object):
                 config['ConnectionStrings']['PIXIS_EventLog'] = SetPIXISEventConnectStr
                 with codecs.open(filename=filepath,mode='w',encoding='utf-8') as configFile:
                     configFile.write(json.dumps(config,indent=4))
-            self.GetDBConfig()
-        except Exception as e:
-            self.plainTextEdit_Result_Display.setPlainText(str(e))
+            except Exception :
+                pass
+        self.GetDBConfig()
 
     def WriteServerSSLConfig(self) -> None:
-        try:
-            filepaths = []
-            filepaths.append(self.lineEdit_ConfigPath_ServerSSL_Web.text())
-            filepaths.append(self.lineEdit_ConfigPath_ServerSSL_CoreService.text())
-            for filepath in filepaths:
+        filepaths = []
+        filepaths.append(self.lineEdit_ConfigPath_ServerSSL_Web.text())
+        filepaths.append(self.lineEdit_ConfigPath_ServerSSL_CoreService.text())
+        for filepath in filepaths:
+            try :
                 config = None
                 with codecs.open(filename=filepath,encoding='utf-8') as configfile:
                     config = json5.loads(configfile.read())
                 config['SecuritySetting']['EnableSSL'] = bool(self.checkBox_Enabled_ServerSSL.checkState())
                 with codecs.open(filename=filepath,mode='w',encoding='utf-8') as configFile:
                     configFile.write(json.dumps(config,indent=4))
-            self.GetServerSSLConfig()
-        except Exception as e:
-            self.plainTextEdit_Result_Display.setPlainText(str(e))
+            except Exception :
+                pass
+        self.GetServerSSLConfig()
 
     def WriteProbeSSLConfig(self) -> None:
         def WriteData(remotepath,localpath) -> None:
@@ -434,7 +453,7 @@ class Ui_MainWindow(object):
         except Exception as e:
             self.plainTextEdit_Result_Display.setPlainText(str(e))
         
-    def RestartAtheNACService(self) -> None:
+    def StartAtheNACService(self) -> None:
         try :
             resultstr = ''
             servicelist = ['PIXISWebUI','PIXISCoreService','PIXISRadiusService']
@@ -442,7 +461,20 @@ class Ui_MainWindow(object):
                 if subprocess.run(['sc', 'query', service]).returncode ==1060 : 
                     resultstr = resultstr + f'{service} : Service Not Found \n'
                     continue
-                subprocess.run(['sc', 'stop', service])
+                result = subprocess.run(['sc', 'stop', service]).returncode
+                resultstr = resultstr + f'{service} : {result} \n'
+            self.plainTextEdit_Result_Display.setPlainText(resultstr)
+        except Exception as e:
+            self.plainTextEdit_Result_Display.setPlainText(str(e))
+    
+    def StopAtheNACService(self) -> None:
+        try :
+            resultstr = ''
+            servicelist = ['PIXISWebUI','PIXISCoreService','PIXISRadiusService']
+            for service in  servicelist :
+                if subprocess.run(['sc', 'query', service]).returncode ==1060 : 
+                    resultstr = resultstr + f'{service} : Service Not Found \n'
+                    continue
                 result = subprocess.run(['sc', 'start', service]).returncode
                 resultstr = resultstr + f'{service} : {result} \n'
             self.plainTextEdit_Result_Display.setPlainText(resultstr)
