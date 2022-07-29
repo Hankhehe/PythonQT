@@ -461,7 +461,7 @@ class Ui_MainWindow(object):
                 if subprocess.run(['sc', 'query', service]).returncode ==1060 : 
                     resultstr = resultstr + f'{service} : Service Not Found \n'
                     continue
-                result = subprocess.run(['sc', 'stop', service]).returncode
+                result = subprocess.run(['sc', 'start', service]).returncode
                 resultstr = resultstr + f'{service} : {result} \n'
             self.plainTextEdit_Result_Display.setPlainText(resultstr)
         except Exception as e:
@@ -475,7 +475,7 @@ class Ui_MainWindow(object):
                 if subprocess.run(['sc', 'query', service]).returncode ==1060 : 
                     resultstr = resultstr + f'{service} : Service Not Found \n'
                     continue
-                result = subprocess.run(['sc', 'start', service]).returncode
+                result = subprocess.run(['sc', 'stop', service]).returncode
                 resultstr = resultstr + f'{service} : {result} \n'
             self.plainTextEdit_Result_Display.setPlainText(resultstr)
         except Exception as e:
