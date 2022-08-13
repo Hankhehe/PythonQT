@@ -370,11 +370,12 @@ class Ui_MainWindow(object):
                     option.AddRange(mIP=Data[3],gwIP=Data[4],NetworkName=Data[1])
                 except Exception as e:
                     Errormessage.append(f'{Data[1]}')
+            if len(Errormessage) == 0 :
+                self.plainTextEdit_Result_Display.setPlainText('Conplete Import')
+            else: self.plainTextEdit_Result_Display.setPlainText(str(Errormessage))
         except Exception as e:
             self.plainTextEdit_Result_Display.setPlainText(str(e))
-        if len(Errormessage) == 0 :
-            self.plainTextEdit_Result_Display.setPlainText('Conplete Import')
-        else: self.plainTextEdit_Result_Display.setPlainText(str(Errormessage))
+        
 
     def GetDBConfig(self) -> None:
         result = {}
