@@ -22,8 +22,6 @@ class AthenacWebAPILibry :
         self.FreshToken ='Bearer ' + r['refresh_token']
     
     def AddRange(self,mIP:str,gwIP:str,NetworkName:str) -> None :
-        #需要提供 Networke ID
-        #{"NetworkId": "14","Name": "192.168.99.X","ManagementIp": "192.168.99.89","StartIp": "192.168.99.1","EndIp": "192.168.99.254","GatewayIp": "192.168.99.254","SubnetMask": "255.255.255.0"}
         manageIP = str(mIP.split('/')[0])
         networkeIP = str(ipaddress.ip_interface(mIP).network)
         IPrange = ipaddress.IPv4Network(networkeIP)
@@ -42,8 +40,6 @@ class AthenacWebAPILibry :
         requests.post(self.ServerIP+Path,headers=Header,data=json.dumps(Data),verify=False)
 
     def AddNetwork(self,ProbeID:int,NetworkName,VLANID:int) -> None :
-        #需要提供 Probe ID
-        #{"PixisProbeId": 10925416137,"NetworkName": "VLAnN999","VlanId": 999}
         Path = '/api/Networks/Create'
         Header = {'Authorization':self.Token,'Content-type': 'application/json'}
         Data = {"PixisProbeId": ProbeID,"NetworkName": NetworkName,"VlanId": VLANID}

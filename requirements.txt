@@ -1,8 +1,11 @@
 altgraph==0.17.2
 bcrypt==3.2.2
+certifi==2022.6.15
 cffi==1.15.1
+charset-normalizer==2.1.0
 cryptography==37.0.4
 future==0.18.2
+idna==3.3
 json5==0.9.8
 paramiko==2.11.0
 pefile==2022.5.30
@@ -16,4 +19,6 @@ PyQt5==5.15.6
 PyQt5-Qt5==5.15.2
 PyQt5-sip==12.10.1
 pywin32-ctypes==0.2.0
+requests==2.28.1
 six==1.16.0
+urllib3==1.26.11
