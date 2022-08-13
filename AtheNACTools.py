@@ -1,5 +1,6 @@
-import json5,codecs,json,subprocess,paramiko,os
+import json5,codecs,json,subprocess,paramiko,os,base64,csv
 from PyQt5 import QtCore, QtGui, QtWidgets
+from AtheNACWebAPI import AthenacWebAPILibry
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -214,6 +215,48 @@ class Ui_MainWindow(object):
         self.pushButton_Reboot_ProbeSSL.setGeometry(QtCore.QRect(620, 80, 75, 23))
         self.pushButton_Reboot_ProbeSSL.setObjectName("pushButton_Reboot_ProbeSSL")
         self.tabWidget.addTab(self.tab_Probe_SSL, "")
+        self.tab = QtWidgets.QWidget()
+        self.tab.setObjectName("tab")
+        self.label_ServerURL_ImportIPRange = QtWidgets.QLabel(self.tab)
+        self.label_ServerURL_ImportIPRange.setGeometry(QtCore.QRect(10, 60, 61, 21))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        self.label_ServerURL_ImportIPRange.setFont(font)
+        self.label_ServerURL_ImportIPRange.setObjectName("label_ServerURL_ImportIPRange")
+        self.lineEdit_ServerURL_ImportIPRange = QtWidgets.QLineEdit(self.tab)
+        self.lineEdit_ServerURL_ImportIPRange.setGeometry(QtCore.QRect(80, 60, 201, 31))
+        self.lineEdit_ServerURL_ImportIPRange.setObjectName("lineEdit_ServerURL_ImportIPRange")
+        self.label_Account_ImportIPRange = QtWidgets.QLabel(self.tab)
+        self.label_Account_ImportIPRange.setGeometry(QtCore.QRect(10, 100, 61, 21))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        self.label_Account_ImportIPRange.setFont(font)
+        self.label_Account_ImportIPRange.setObjectName("label_Account_ImportIPRange")
+        self.lineEdit_Account_ImportIPRange = QtWidgets.QLineEdit(self.tab)
+        self.lineEdit_Account_ImportIPRange.setGeometry(QtCore.QRect(80, 100, 201, 31))
+        self.lineEdit_Account_ImportIPRange.setObjectName("lineEdit_Account_ImportIPRange")
+        self.label_Pasword_ImportIPRange = QtWidgets.QLabel(self.tab)
+        self.label_Pasword_ImportIPRange.setGeometry(QtCore.QRect(10, 140, 61, 21))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        self.label_Pasword_ImportIPRange.setFont(font)
+        self.label_Pasword_ImportIPRange.setObjectName("label_Pasword_ImportIPRange")
+        self.lineEdit_Password_ImportIPRange = QtWidgets.QLineEdit(self.tab)
+        self.lineEdit_Password_ImportIPRange.setGeometry(QtCore.QRect(80, 140, 201, 31))
+        self.lineEdit_Password_ImportIPRange.setObjectName("lineEdit_Password_ImportIPRange")
+        self.lineEdit_FilePath_ImportIPRange = QtWidgets.QLineEdit(self.tab)
+        self.lineEdit_FilePath_ImportIPRange.setGeometry(QtCore.QRect(80, 180, 201, 31))
+        self.lineEdit_FilePath_ImportIPRange.setObjectName("lineEdit_FilePath_ImportIPRange")
+        self.label_FilePath_ImportIPRange = QtWidgets.QLabel(self.tab)
+        self.label_FilePath_ImportIPRange.setGeometry(QtCore.QRect(10, 180, 61, 21))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        self.label_FilePath_ImportIPRange.setFont(font)
+        self.label_FilePath_ImportIPRange.setObjectName("label_FilePath_ImportIPRange")
+        self.pushButton_Import_ImportIPRange = QtWidgets.QPushButton(self.tab)
+        self.pushButton_Import_ImportIPRange.setGeometry(QtCore.QRect(290, 190, 75, 23))
+        self.pushButton_Import_ImportIPRange.setObjectName("pushButton_Import_ImportIPRange")
+        self.tabWidget.addTab(self.tab, "")
         self.plainTextEdit_Result_Display = QtWidgets.QPlainTextEdit(self.centralwidget)
         self.plainTextEdit_Result_Display.setGeometry(QtCore.QRect(20, 470, 1021, 311))
         self.plainTextEdit_Result_Display.setLineWrapMode(QtWidgets.QPlainTextEdit.NoWrap)
@@ -283,6 +326,16 @@ class Ui_MainWindow(object):
         self.pushButton_Query_ProbeSSL.setText(_translate("MainWindow", "Query Value"))
         self.pushButton_Reboot_ProbeSSL.setText(_translate("MainWindow", "Reboot"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_Probe_SSL), _translate("MainWindow", "En/Disable Probe SSL"))
+        self.label_ServerURL_ImportIPRange.setText(_translate("MainWindow", "ServerURL"))
+        self.lineEdit_ServerURL_ImportIPRange.setText(_translate("MainWindow", "https://192.168.11.180:8000"))
+        self.label_Account_ImportIPRange.setText(_translate("MainWindow", "Account"))
+        self.lineEdit_Account_ImportIPRange.setText(_translate("MainWindow", "admin"))
+        self.label_Pasword_ImportIPRange.setText(_translate("MainWindow", "Password"))
+        self.lineEdit_Password_ImportIPRange.setText(_translate("MainWindow", "admin"))
+        self.lineEdit_FilePath_ImportIPRange.setText(_translate("MainWindow", "C:/IPRange.csv"))
+        self.label_FilePath_ImportIPRange.setText(_translate("MainWindow", "FilePath"))
+        self.pushButton_Import_ImportIPRange.setText(_translate("MainWindow", "Import"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "ImportIPRange"))
 
         
         self.pushButton_Query_DBConfig.clicked.connect(self.GetDBConfig)
@@ -298,8 +351,31 @@ class Ui_MainWindow(object):
         self.pushButton_Change_ProbeSSL.clicked.connect(self.WriteProbeSSLConfig)
         self.pushButton_Query_ProbeSSL.clicked.connect(self.GetProbeSSLConfig)
         self.pushButton_Reboot_ProbeSSL.clicked.connect(self.RestartProbe)
-        
-    
+        self.pushButton_Import_ImportIPRange.clicked.connect(self.ImportIPRange)
+
+    def ImportIPRange(self) -> None :
+        Datas = list()
+        Errormessage = []
+        try:
+            option = AthenacWebAPILibry(self.lineEdit_ServerURL_ImportIPRange.text(),self.lineEdit_Account_ImportIPRange.text()
+                ,base64.b64encode(self.lineEdit_Password_ImportIPRange.text().encode('UTF-8')))
+            with open(self.lineEdit_FilePath_ImportIPRange.text(),newline='') as f :
+                Rows = csv.reader(f)
+                for Row in Rows:
+                    Datas.append(Row)
+            del Datas[0]
+            for Data in Datas:
+                try:
+                    option.AddNetwork(ProbeID=Data[0],NetworkName=Data[1],VLANID=Data[2])
+                    option.AddRange(mIP=Data[3],gwIP=Data[4],NetworkName=Data[1])
+                except Exception as e:
+                    Errormessage.append(f'{Data[1]}')
+        except Exception as e:
+            self.plainTextEdit_Result_Display.setPlainText(str(e))
+        if len(Errormessage) == 0 :
+            self.plainTextEdit_Result_Display.setPlainText('Conplete Import')
+        else: self.plainTextEdit_Result_Display.setPlainText(str(Errormessage))
+
     def GetDBConfig(self) -> None:
         result = {}
         try :

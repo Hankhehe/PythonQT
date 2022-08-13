@@ -1,11 +1,6 @@
 from AtheNACWebAPI import AthenacWebAPILibry
 import base64,csv
 
-# ProbeID = 10925416137
-# netName = 'VLAN 118'
-# VLANId = 118
-# manageIP = '192.168.118.171/24'
-# gatewayIP = '192.168.118.254'
 Datas = list()
 with open('IPRange.csv',newline='') as f :
     Rows = csv.reader(f)
