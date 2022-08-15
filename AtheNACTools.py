@@ -259,6 +259,9 @@ class Ui_MainWindow(object):
         self.pushButton_ImportDHCP_ImportIPRange = QtWidgets.QPushButton(self.tab)
         self.pushButton_ImportDHCP_ImportIPRange.setGeometry(QtCore.QRect(370, 190, 75, 23))
         self.pushButton_ImportDHCP_ImportIPRange.setObjectName("pushButton_ImportDHCP_ImportIPRange")
+        self.pushButton_DownloadSample_ImportIPRange = QtWidgets.QPushButton(self.tab)
+        self.pushButton_DownloadSample_ImportIPRange.setGeometry(QtCore.QRect(290, 60, 101, 21))
+        self.pushButton_DownloadSample_ImportIPRange.setObjectName("pushButton_DownloadSample_ImportIPRange")
         self.tabWidget.addTab(self.tab, "")
         self.plainTextEdit_Result_Display = QtWidgets.QPlainTextEdit(self.centralwidget)
         self.plainTextEdit_Result_Display.setGeometry(QtCore.QRect(20, 470, 1021, 311))
@@ -339,10 +342,11 @@ class Ui_MainWindow(object):
         self.label_FilePath_ImportIPRange.setText(_translate("MainWindow", "FilePath"))
         self.pushButton_ImportRange_ImportIPRange.setText(_translate("MainWindow", "ImportRange"))
         self.pushButton_ImportDHCP_ImportIPRange.setText(_translate("MainWindow", "ImportDHCP"))
+        self.pushButton_DownloadSample_ImportIPRange.setText(_translate("MainWindow", "DownloadSample"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "ImportIPRange"))
 
-        
-        
+
+
         self.pushButton_Query_DBConfig.clicked.connect(self.GetDBConfig)
         self.pushButton_Change_DBConfig.clicked.connect(self.WriteDBConfig)
         self.pushButton_GetRadis_DBConfig.clicked.connect(self.GetRadisIP)
@@ -358,6 +362,15 @@ class Ui_MainWindow(object):
         self.pushButton_Reboot_ProbeSSL.clicked.connect(self.RestartProbe)
         self.pushButton_ImportRange_ImportIPRange.clicked.connect(self.ImportIPRange)
         self.pushButton_ImportDHCP_ImportIPRange.clicked.connect(self.ImportDHCP)
+        self.pushButton_DownloadSample_ImportIPRange.clicked.connect(self.DownloadImportSample)
+
+    def DownloadImportSample(self) -> None:
+        with open('IPRange.csv',mode='w',encoding='UTF-8') as f:
+            sampledata = 'ProbeID,NetWorkName,VLANID,ManageIP,GatewayIP,DNS1,DNS2,LeaseMinuteTime,DHCPStartIP,DHCPEndIP\n'\
+                        +'10925416137,VLAN 999,999,192.168.99.171/24,192.168.21.254,192.168.10.201,8.8.8.8,11520,192.168.99.1,192.168.99.100\n'\
+                        +'10925416137,VLAN 800,800,192.168.28.171/22,192.168.28.254,192.168.10.201,8.8.8.8,11520,192.168.28.1,192.168.28.100'
+            f.write(sampledata)
+        self.plainTextEdit_Result_Display.setPlainText('Conplete Download Sample')
 
     def ImportDHCP(self) -> None:
         Datas = list()

@@ -876,6 +876,19 @@
        <string>ImportDHCP</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="pushButton_DownloadSample_ImportIPRange">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>60</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>DownloadSample</string>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QPlainTextEdit" name="plainTextEdit_Result_Display">
