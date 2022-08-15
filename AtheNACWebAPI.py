@@ -1,4 +1,3 @@
-from email.header import Header
 import requests,json,ipaddress
 from urllib import parse
 
