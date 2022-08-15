@@ -1,3 +1,4 @@
+from email.header import Header
 import requests,json,ipaddress
 from urllib import parse
 
@@ -21,6 +22,36 @@ class AthenacWebAPILibry :
         self.Token = 'Bearer '+ r['access_token']
         self.FreshToken ='Bearer ' + r['refresh_token']
     
+    def AddDNSByNetwork(self,NetworkName:str,DNS1:str,DNS2:str,LeaseMinuteTime:int)-> None:
+        NetWorkerID = self.GetNetworkInfoByName(NetworkName=NetworkName)
+        Path = f'/api/Networks/{NetWorkerID}/DHCPv4Setting'
+        Header = {'Authorization':self.Token,'Content-type': 'application/json'}
+        Data = {
+                "DNS1": DNS1,
+                "DNS2": DNS2,
+                "LeaseTimeInMinute": LeaseMinuteTime,
+                "DhcpProxyServer": "",
+                "VlanInformation": "",
+                "AvayaOption": "",
+                "CallServerInformation": ""
+                }
+        requests.put(self.ServerIP+Path,headers=Header,data=json.dumps(Data),verify=False)
+
+    def AddDHCPool(self,RangeName:str,StartIP:str,EndIP:str) -> None:
+        RangeID = self.GetIPRangeInfoByName(RangeName=RangeName)
+        Path = '/api/DhcpPools'
+        Header = {'Authorization':self.Token,'Content-type': 'application/json'}
+        Data ={
+                # "Id": 0,
+                "IpRangeId": RangeID,
+                "StartIp": StartIP,
+                "EndIp": EndIP,
+                "PoolType": 0,
+                "EnableStaticIpBlock": False,
+                "EnableOnlyAssignDHCPStaticIPPolicy": False
+                }
+        requests.post(self.ServerIP+Path,headers=Header,data=json.dumps(Data),verify=False)
+
     def AddRange(self,mIP:str,gwIP:str,NetworkName:str) -> None :
         manageIP = str(mIP.split('/')[0])
         networkeIP = str(ipaddress.ip_interface(mIP).network)
@@ -44,6 +75,15 @@ class AthenacWebAPILibry :
         Header = {'Authorization':self.Token,'Content-type': 'application/json'}
         Data = {"PixisProbeId": ProbeID,"NetworkName": NetworkName,"VlanId": VLANID}
         requests.post(self.ServerIP+Path,headers=Header,data=json.dumps(Data),verify=False)
+
+    def GetIPRangeInfoByName(self,RangeName:str) -> int | None:
+        Path ='/api/IpRanges/V4'
+        Header = {'Authorization':self.Token,'Content-type': 'application/json'}
+        r = requests.get(self.ServerIP+Path,headers=Header,verify=False)
+        r = json.loads(r.text)
+        for i in r:
+            if i['Name'] == RangeName:
+                return i['Id']
 
     def GetNetworkInfoByName(self,NetworkName:str)-> int | None :
         r = None

@@ -754,7 +754,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>https://192.168.11.180:8000</string>
+       <string>https://192.168.22.180:8001</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_Account_ImportIPRange">
@@ -829,7 +829,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>C:/IPRange.csv</string>
+       <string>IPRange.csv</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_FilePath_ImportIPRange">
@@ -850,7 +850,7 @@
        <string>FilePath</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_Import_ImportIPRange">
+     <widget class="QPushButton" name="pushButton_ImportRange_ImportIPRange">
       <property name="geometry">
        <rect>
         <x>290</x>
@@ -860,7 +860,20 @@
        </rect>
       </property>
       <property name="text">
-       <string>Import</string>
+       <string>ImportRange</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_ImportDHCP_ImportIPRange">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>190</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>ImportDHCP</string>
       </property>
      </widget>
     </widget>

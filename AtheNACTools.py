@@ -1,4 +1,4 @@
-import json5,codecs,json,subprocess,paramiko,os,base64,csv
+import json5,codecs,json,subprocess,paramiko,os,base64,csv,ipaddress
 from PyQt5 import QtCore, QtGui, QtWidgets
 from AtheNACWebAPI import AthenacWebAPILibry
 
@@ -253,9 +253,12 @@ class Ui_MainWindow(object):
         font.setFamily("Arial")
         self.label_FilePath_ImportIPRange.setFont(font)
         self.label_FilePath_ImportIPRange.setObjectName("label_FilePath_ImportIPRange")
-        self.pushButton_Import_ImportIPRange = QtWidgets.QPushButton(self.tab)
-        self.pushButton_Import_ImportIPRange.setGeometry(QtCore.QRect(290, 190, 75, 23))
-        self.pushButton_Import_ImportIPRange.setObjectName("pushButton_Import_ImportIPRange")
+        self.pushButton_ImportRange_ImportIPRange = QtWidgets.QPushButton(self.tab)
+        self.pushButton_ImportRange_ImportIPRange.setGeometry(QtCore.QRect(290, 190, 75, 23))
+        self.pushButton_ImportRange_ImportIPRange.setObjectName("pushButton_ImportRange_ImportIPRange")
+        self.pushButton_ImportDHCP_ImportIPRange = QtWidgets.QPushButton(self.tab)
+        self.pushButton_ImportDHCP_ImportIPRange.setGeometry(QtCore.QRect(370, 190, 75, 23))
+        self.pushButton_ImportDHCP_ImportIPRange.setObjectName("pushButton_ImportDHCP_ImportIPRange")
         self.tabWidget.addTab(self.tab, "")
         self.plainTextEdit_Result_Display = QtWidgets.QPlainTextEdit(self.centralwidget)
         self.plainTextEdit_Result_Display.setGeometry(QtCore.QRect(20, 470, 1021, 311))
@@ -327,16 +330,18 @@ class Ui_MainWindow(object):
         self.pushButton_Reboot_ProbeSSL.setText(_translate("MainWindow", "Reboot"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_Probe_SSL), _translate("MainWindow", "En/Disable Probe SSL"))
         self.label_ServerURL_ImportIPRange.setText(_translate("MainWindow", "ServerURL"))
-        self.lineEdit_ServerURL_ImportIPRange.setText(_translate("MainWindow", "https://192.168.11.180:8000"))
+        self.lineEdit_ServerURL_ImportIPRange.setText(_translate("MainWindow", "https://192.168.22.180:8001"))
         self.label_Account_ImportIPRange.setText(_translate("MainWindow", "Account"))
         self.lineEdit_Account_ImportIPRange.setText(_translate("MainWindow", "admin"))
         self.label_Pasword_ImportIPRange.setText(_translate("MainWindow", "Password"))
         self.lineEdit_Password_ImportIPRange.setText(_translate("MainWindow", "admin"))
-        self.lineEdit_FilePath_ImportIPRange.setText(_translate("MainWindow", "C:/IPRange.csv"))
+        self.lineEdit_FilePath_ImportIPRange.setText(_translate("MainWindow", "IPRange.csv"))
         self.label_FilePath_ImportIPRange.setText(_translate("MainWindow", "FilePath"))
-        self.pushButton_Import_ImportIPRange.setText(_translate("MainWindow", "Import"))
+        self.pushButton_ImportRange_ImportIPRange.setText(_translate("MainWindow", "ImportRange"))
+        self.pushButton_ImportDHCP_ImportIPRange.setText(_translate("MainWindow", "ImportDHCP"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "ImportIPRange"))
 
+        
         
         self.pushButton_Query_DBConfig.clicked.connect(self.GetDBConfig)
         self.pushButton_Change_DBConfig.clicked.connect(self.WriteDBConfig)
@@ -351,7 +356,32 @@ class Ui_MainWindow(object):
         self.pushButton_Change_ProbeSSL.clicked.connect(self.WriteProbeSSLConfig)
         self.pushButton_Query_ProbeSSL.clicked.connect(self.GetProbeSSLConfig)
         self.pushButton_Reboot_ProbeSSL.clicked.connect(self.RestartProbe)
-        self.pushButton_Import_ImportIPRange.clicked.connect(self.ImportIPRange)
+        self.pushButton_ImportRange_ImportIPRange.clicked.connect(self.ImportIPRange)
+        self.pushButton_ImportDHCP_ImportIPRange.clicked.connect(self.ImportDHCP)
+
+    def ImportDHCP(self) -> None:
+        Datas = list()
+        Errormessage = []
+        try:
+            option = AthenacWebAPILibry(self.lineEdit_ServerURL_ImportIPRange.text(),self.lineEdit_Account_ImportIPRange.text()
+                    ,base64.b64encode(self.lineEdit_Password_ImportIPRange.text().encode('UTF-8')))
+            with open(self.lineEdit_FilePath_ImportIPRange.text(),newline='') as f :
+                    Rows = csv.reader(f)
+                    for Row in Rows:
+                        Datas.append(Row)
+            del Datas[0]
+            for Data in Datas:
+                RangeName = str(ipaddress.ip_interface(Data[3]).network)
+                try:
+                    option.AddDNSByNetwork(NetworkName=Data[1],DNS1=Data[5],DNS2=Data[6],LeaseMinuteTime=int(Data[7]))
+                    option.AddDHCPool(RangeName=RangeName,StartIP=Data[8],EndIP=Data[9])
+                except Exception as e:
+                    Errormessage.append(f'{Data[1]}')
+            if len(Errormessage) == 0 :
+                self.plainTextEdit_Result_Display.setPlainText('Conplete Import DHCP')
+            else: self.plainTextEdit_Result_Display.setPlainText('DHCP Error:'+str(Errormessage))
+        except Exception as e:
+            self.plainTextEdit_Result_Display.setPlainText(str(e))
 
     def ImportIPRange(self) -> None :
         Datas = list()
@@ -371,8 +401,8 @@ class Ui_MainWindow(object):
                 except Exception as e:
                     Errormessage.append(f'{Data[1]}')
             if len(Errormessage) == 0 :
-                self.plainTextEdit_Result_Display.setPlainText('Conplete Import')
-            else: self.plainTextEdit_Result_Display.setPlainText(str(Errormessage))
+                self.plainTextEdit_Result_Display.setPlainText('Conplete Import Range')
+            else: self.plainTextEdit_Result_Display.setPlainText('Range Error:'+str(Errormessage))
         except Exception as e:
             self.plainTextEdit_Result_Display.setPlainText(str(e))
         
