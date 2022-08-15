@@ -25,22 +25,26 @@ class AthenacWebAPILibry :
     def AddDNSByNetwork(self,NetworkName:str,DNS1:str,DNS2:str,LeaseMinuteTime:int)-> None:
         NetWorkerID = self.GetNetworkInfoByName(NetworkName=NetworkName)
         Path = f'/api/Networks/{NetWorkerID}/DHCPv4Setting'
-        Header = {'Authorization':self.Token,'Content-type': 'application/json'}
         Data = {
-                "DNS1": DNS1,
-                "DNS2": DNS2,
-                "LeaseTimeInMinute": LeaseMinuteTime,
-                "DhcpProxyServer": "",
-                "VlanInformation": "",
-                "AvayaOption": "",
-                "CallServerInformation": ""
-                }
-        requests.put(self.ServerIP+Path,headers=Header,data=json.dumps(Data),verify=False)
+                    "DNS1": DNS1,
+                    "DNS2": DNS2,
+                    "LeaseTimeInMinute": LeaseMinuteTime,
+                    "DhcpProxyServer": "",
+                    "VlanInformation": "",
+                    "AvayaOption": "",
+                    "CallServerInformation": ""
+                    }
+        for retirescount in range(self.retriesnum):
+            Header = {'Authorization':self.Token,'Content-type': 'application/json'}
+            r = requests.put(self.ServerIP+Path,headers=Header,data=json.dumps(Data),verify=False)
+            if r.status_code == 200:
+                break
+            elif r.status_code == 401:
+                self.GetLoginToken()
 
     def AddDHCPool(self,RangeName:str,StartIP:str,EndIP:str) -> None:
         RangeID = self.GetIPRangeInfoByName(RangeName=RangeName)
         Path = '/api/DhcpPools'
-        Header = {'Authorization':self.Token,'Content-type': 'application/json'}
         Data ={
                 # "Id": 0,
                 "IpRangeId": RangeID,
@@ -50,7 +54,13 @@ class AthenacWebAPILibry :
                 "EnableStaticIpBlock": False,
                 "EnableOnlyAssignDHCPStaticIPPolicy": False
                 }
-        requests.post(self.ServerIP+Path,headers=Header,data=json.dumps(Data),verify=False)
+        for retirescount in range(self.retriesnum):
+            Header = {'Authorization':self.Token,'Content-type': 'application/json'}
+            r = requests.post(self.ServerIP+Path,headers=Header,data=json.dumps(Data),verify=False)
+            if r.status_code == 200:
+                break
+            elif r.status_code == 401:
+                self.GetLoginToken()
 
     def AddRange(self,mIP:str,gwIP:str,NetworkName:str) -> None :
         manageIP = str(mIP.split('/')[0])
@@ -60,7 +70,6 @@ class AthenacWebAPILibry :
         first,last = str(IPrange[1]),str(IPrange[-2])
         NetworkerId = self.GetNetworkInfoByName(NetworkName=NetworkName)
         Path = '/api/IpRanges/V4'
-        Header = {'Authorization':self.Token,'Content-type': 'application/json'}
         Data = {"NetworkId": NetworkerId
         ,"Name": networkeIP
         ,"ManagementIp": manageIP
@@ -68,33 +77,58 @@ class AthenacWebAPILibry :
         ,"EndIp": last
         ,"GatewayIp": gwIP
         ,"SubnetMask": submask}
-        requests.post(self.ServerIP+Path,headers=Header,data=json.dumps(Data),verify=False)
+        for retirescount in range(self.retriesnum):
+            Header = {'Authorization':self.Token,'Content-type': 'application/json'}
+            r = requests.post(self.ServerIP+Path,headers=Header,data=json.dumps(Data),verify=False)
+            if r.status_code == 200:
+                break
+            elif r.status_code == 401:
+                self.GetLoginToken()
 
     def AddNetwork(self,ProbeID:int,NetworkName,VLANID:int) -> None :
         Path = '/api/Networks/Create'
-        Header = {'Authorization':self.Token,'Content-type': 'application/json'}
         Data = {"PixisProbeId": ProbeID,"NetworkName": NetworkName,"VlanId": VLANID}
-        requests.post(self.ServerIP+Path,headers=Header,data=json.dumps(Data),verify=False)
+        for retirescount in range(self.retriesnum):
+            Header = {'Authorization':self.Token,'Content-type': 'application/json'}
+            r = requests.post(self.ServerIP+Path,headers=Header,data=json.dumps(Data),verify=False)
+            if r.status_code == 200:
+                break
+            elif r.status_code == 401:
+                self.GetLoginToken()
 
     def GetIPRangeInfoByName(self,RangeName:str) -> int | None:
         Path ='/api/IpRanges/V4'
-        Header = {'Authorization':self.Token,'Content-type': 'application/json'}
-        r = requests.get(self.ServerIP+Path,headers=Header,verify=False)
-        r = json.loads(r.text)
-        for i in r:
-            if i['Name'] == RangeName:
-                return i['Id']
+        r = None
+        for retirescount in range(self.retriesnum):
+            Header = {'Authorization':self.Token,'Content-type': 'application/json'}
+            r = requests.get(self.ServerIP+Path,headers=Header,verify=False)
+            if r.status_code == 200:
+                break
+            elif r.status_code == 401:
+                self.GetLoginToken()
+            else: return
+        if r :
+            r = json.loads(r.text)
+            for i in r:
+                if i['Name'] == RangeName:
+                    return i['Id']
 
     def GetNetworkInfoByName(self,NetworkName:str)-> int | None :
         r = None
         Path = '/api/Networks/Query'
-        Header = {'Authorization':self.Token,'Content-type': 'application/json'}
         Data = {'take':0}
-        r = requests.post(self.ServerIP+Path,headers=Header,data=json.dumps(Data),verify=False)
-        r = json.loads(r.text)['Data']
-        for i in r :
-            if i['NetworkName'] == NetworkName :
-                return i['NetworkId']
+        for retirescount in range(self.retriesnum):
+            Header = {'Authorization':self.Token,'Content-type': 'application/json'}
+            r = requests.post(self.ServerIP+Path,headers=Header,data=json.dumps(Data),verify=False)
+            if r.status_code == 200:
+                break
+            elif r.status_code == 401:
+                self.GetLoginToken()
+        if r :
+            r = json.loads(r.text)['Data']
+            for i in r :
+                if i['NetworkName'] == NetworkName :
+                    return i['NetworkId']
             
 
     
