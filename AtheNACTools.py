@@ -377,6 +377,8 @@ class Ui_MainWindow(object):
         self.pushButton_ImportDHCP_ImportIPRange.clicked.connect(self.ImportDHCP)
         self.pushButton_DownloadSample_ImportIPRange.clicked.connect(self.DownloadImportSample)
 
+    #region Action
+
     def DownloadImportSample(self) -> None:
         with open('IPRange.csv',mode='w',encoding='UTF-8') as f:
             sampledata = 'ProbeID,NetWorkName,VLANID,ManageIP,GatewayIP,DNS1,DNS2,LeaseMinuteTime,DHCPStartIP,DHCPEndIP\n'\
@@ -432,7 +434,6 @@ class Ui_MainWindow(object):
         except Exception as e:
             self.plainTextEdit_Result_Display.setPlainText(str(e))
         
-
     def GetDBConfig(self) -> None:
         result = {}
         try :
@@ -511,6 +512,7 @@ class Ui_MainWindow(object):
                 self.plainTextEdit_Result_Display.setPlainText(f'Radis IP : {config["HAConfig"]["RedisServer"]}')
         except Exception as e:
             self.plainTextEdit_Result_Display.setPlainText(str(e))
+    
     def WriteRadisIP(self) -> None:
         data = None
         try:
@@ -614,7 +616,7 @@ class Ui_MainWindow(object):
             self.plainTextEdit_Result_Display.setPlainText(resultstr)
         except Exception as e:
             self.plainTextEdit_Result_Display.setPlainText(str(e))
-    
+
     def RestartProbe(self) -> None:
         try:
             ssh = paramiko.SSHClient()
@@ -626,6 +628,7 @@ class Ui_MainWindow(object):
         except Exception as e :
             self.plainTextEdit_Result_Display.setPlainText(str(e))
 
+    #endregion Action
 
 if __name__ == "__main__":
     import sys

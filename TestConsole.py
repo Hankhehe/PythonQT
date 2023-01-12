@@ -1,20 +1,19 @@
 from AtheNACWebAPI import AthenacWebAPILibry
-import base64,csv
+import base64,csv,paramiko
 
+def RestartProbe() -> None:
+    try:
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh.connect(hostname= '192.168.21.171',username= 'root', password='1111')
+        aa,bb,cc =  ssh.exec_command('top -b -o +%MEM | head -n 6')
+        result = bb.readlines()
+        print(''.join(bb.readlines()))
+        # self.plainTextEdit_Result_Display.setPlainText('Finished reboot')
+        pass
+    except Exception as e :
+        print(str(e))
 
-option = AthenacWebAPILibry('http://192.168.21.180:8000','admin',base64.b64encode('admin'.encode('UTF-8')))
-aa = option.GetIPRangeInfoByName('192.168.21.X')
-pass
-
-Datas = list()
-with open('IPRange.csv',newline='') as f :
-    Rows = csv.reader(f)
-    for Row in Rows:
-        Datas.append(Row)
-del Datas[0]
-for Data in Datas:
-    option = AthenacWebAPILibry('http://192.168.21.180:8000','admin',base64.b64encode('admin'.encode('UTF-8')))
-    option.AddNetwork(ProbeID=Data[0],NetworkName=Data[1],VLANID=Data[2])
-    option.AddRange(mIP=Data[3],gwIP=Data[4],NetworkName=Data[1])
-pass
-
+if __name__ == '__main__':
+    RestartProbe()
+    pass
